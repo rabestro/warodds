@@ -1,0 +1,116 @@
+<Page
+    navigatingTo="onNavigatingTo"  
+    xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ActionBar>
+        <Label text="Warlords Battle Odds Calculator"></Label>
+    </ActionBar>
+
+    <StackLayout class="home-panel">
+        <GridLayout columns="*,*,*,*,*,*,*,*" 
+                rows="auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto, auto">
+            <Label row="0" col="0" colSpan="4" text="Attacker"/>
+            <Label row="0" col="4" colSpan="4" textAlignment="right" text="{{ attackerWinPercent, attackerWinPercent | percentConverter() }}"/>
+
+            <TextField class="-border unit-strength" row="1" col="0" text="{{ attacker[0] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="1" col="1" text="{{ attacker[1] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="1" col="2" text="{{ attacker[2] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="1" col="3" text="{{ attacker[3] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="1" col="4" text="{{ attacker[4] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="1" col="5" text="{{ attacker[5] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="1" col="6" text="{{ attacker[6] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="1" col="7" text="{{ attacker[7] }}" hint="" maxLength="1" keyboardType="number"/>
+
+            <Label class="percent" row="2" col="0" text="{{ statistics.attacker[0], statistics.attacker[0] | percentConverter }}"/>
+            <Label class="percent" row="2" col="1" text="{{ statistics.attacker[1], statistics.attacker[1] | percentConverter }}"/>
+            <Label class="percent" row="2" col="2" text="{{ statistics.attacker[2], statistics.attacker[2] | percentConverter }}"/>
+            <Label class="percent" row="2" col="3" text="{{ statistics.attacker[3], statistics.attacker[3] | percentConverter }}"/>
+            <Label class="percent" row="2" col="4" text="{{ statistics.attacker[4], statistics.attacker[4] | percentConverter }}"/>
+            <Label class="percent" row="2" col="5" text="{{ statistics.attacker[5], statistics.attacker[5] | percentConverter }}"/>
+            <Label class="percent" row="2" col="6" text="{{ statistics.attacker[6], statistics.attacker[6] | percentConverter }}"/>
+            <Label class="percent" row="2" col="7" text="{{ statistics.attacker[7], statistics.attacker[7] | percentConverter }}"/>
+            
+            
+            
+            <Label style="margin-top: 15dp" row="3" col="0" colSpan="4" text="Defender"/>
+            <Label style="margin-top: 15dp" row="3" col="4" colSpan="4" textAlignment="right" text="{{ defenderWinPercent, defenderWinPercent | percentConverter() }}"/>
+
+            <TextField class="-border unit-strength" row="4" col="0" text="{{ defender[0] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="4" col="1" text="{{ defender[1] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="4" col="2" text="{{ defender[2] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="4" col="3" text="{{ defender[3] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="4" col="4" text="{{ defender[4] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="4" col="5" text="{{ defender[5] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="4" col="6" text="{{ defender[6] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="4" col="7" text="{{ defender[7] }}" hint="" maxLength="1" keyboardType="number"/>
+
+            <TextField class="-border unit-strength" row="5" col="0" text="{{ defender[8] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="5" col="1" text="{{ defender[9] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="5" col="2" text="{{ defender[10] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="5" col="3" text="{{ defender[11] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="5" col="4" text="{{ defender[12] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="5" col="5" text="{{ defender[13] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="5" col="6" text="{{ defender[14] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="5" col="7" text="{{ defender[15] }}" hint="" maxLength="1" keyboardType="number"/>
+
+            <TextField class="-border unit-strength" row="6" col="0" text="{{ defender[16] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="6" col="1" text="{{ defender[17] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="6" col="2" text="{{ defender[18] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="6" col="3" text="{{ defender[19] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="6" col="4" text="{{ defender[20] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="6" col="5" text="{{ defender[21] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="6" col="6" text="{{ defender[22] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="6" col="7" text="{{ defender[23] }}" hint="" maxLength="1" keyboardType="number"/>
+
+            <TextField class="-border unit-strength" row="7" col="0" text="{{ defender[24] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="7" col="1" text="{{ defender[25] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="7" col="2" text="{{ defender[26] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="7" col="3" text="{{ defender[27] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="7" col="4" text="{{ defender[28] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="7" col="5" text="{{ defender[29] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="7" col="6" text="{{ defender[30] }}" hint="" maxLength="1" keyboardType="number"/>
+            <TextField class="-border unit-strength" row="7" col="7" text="{{ defender[31] }}" hint="" maxLength="1" keyboardType="number"/>
+
+            <Label class="percent" row="8" col="0" text="{{ statistics.defender[0], statistics.defender[0] | percentConverter }}"/>
+            <Label class="percent" row="8" col="1" text="{{ statistics.defender[1], statistics.defender[1] | percentConverter }}"/>
+            <Label class="percent" row="8" col="2" text="{{ statistics.defender[2], statistics.defender[2] | percentConverter }}"/>
+            <Label class="percent" row="8" col="3" text="{{ statistics.defender[3], statistics.defender[3] | percentConverter }}"/>
+            <Label class="percent" row="8" col="4" text="{{ statistics.defender[4], statistics.defender[4] | percentConverter }}"/>
+            <Label class="percent" row="8" col="5" text="{{ statistics.defender[5], statistics.defender[5] | percentConverter }}"/>
+            <Label class="percent" row="8" col="6" text="{{ statistics.defender[6], statistics.defender[6] | percentConverter }}"/>
+            <Label class="percent" row="8" col="7" text="{{ statistics.defender[7], statistics.defender[7] | percentConverter }}"/>
+
+            <Label class="percent" row="9" col="0" text="{{ statistics.defender[8], statistics.defender[8] | percentConverter }}"/>
+            <Label class="percent" row="9" col="1" text="{{ statistics.defender[9], statistics.defender[9] | percentConverter }}"/>
+            <Label class="percent" row="9" col="2" text="{{ statistics.defender[10], statistics.defender[10] | percentConverter }}"/>
+            <Label class="percent" row="9" col="3" text="{{ statistics.defender[11], statistics.defender[11] | percentConverter }}"/>
+            <Label class="percent" row="9" col="4" text="{{ statistics.defender[12], statistics.defender[12] | percentConverter }}"/>
+            <Label class="percent" row="9" col="5" text="{{ statistics.defender[13], statistics.defender[13] | percentConverter }}"/>
+            <Label class="percent" row="9" col="6" text="{{ statistics.defender[14], statistics.defender[14] | percentConverter }}"/>
+            <Label class="percent" row="9" col="7" text="{{ statistics.defender[15], statistics.defender[15] | percentConverter }}"/>
+
+            <Label class="percent" row="10" col="0" text="{{ statistics.defender[16], statistics.defender[16] | percentConverter }}"/>
+            <Label class="percent" row="10" col="1" text="{{ statistics.defender[17], statistics.defender[17] | percentConverter }}"/>
+            <Label class="percent" row="10" col="2" text="{{ statistics.defender[18], statistics.defender[18] | percentConverter }}"/>
+            <Label class="percent" row="10" col="3" text="{{ statistics.defender[19], statistics.defender[19] | percentConverter }}"/>
+            <Label class="percent" row="10" col="4" text="{{ statistics.defender[20], statistics.defender[20] | percentConverter }}"/>
+            <Label class="percent" row="10" col="5" text="{{ statistics.defender[21], statistics.defender[21] | percentConverter }}"/>
+            <Label class="percent" row="10" col="6" text="{{ statistics.defender[22], statistics.defender[22] | percentConverter }}"/>
+            <Label class="percent" row="10" col="7" text="{{ statistics.defender[23], statistics.defender[23] | percentConverter }}"/>
+
+            <Label class="percent" row="11" col="0" text="{{ statistics.defender[24], statistics.defender[24] | percentConverter }}"/>
+            <Label class="percent" row="11" col="1" text="{{ statistics.defender[25], statistics.defender[25] | percentConverter }}"/>
+            <Label class="percent" row="11" col="2" text="{{ statistics.defender[26], statistics.defender[26] | percentConverter }}"/>
+            <Label class="percent" row="11" col="3" text="{{ statistics.defender[27], statistics.defender[27] | percentConverter }}"/>
+            <Label class="percent" row="11" col="4" text="{{ statistics.defender[28], statistics.defender[28] | percentConverter }}"/>
+            <Label class="percent" row="11" col="5" text="{{ statistics.defender[29], statistics.defender[29] | percentConverter }}"/>
+            <Label class="percent" row="11" col="6" text="{{ statistics.defender[30], statistics.defender[30] | percentConverter }}"/>
+            <Label class="percent" row="11" col="7" text="{{ statistics.defender[31], statistics.defender[31] | percentConverter }}"/>
+
+        </GridLayout>
+        <GridLayout rows="auto" columns="*,*">
+            <Button class="-primary" row="0" col="0" text="CALCULATE" tap="{{ onCalculate }}"></Button>
+            <Button class="" row="0" col="1" text="CLEAR" tap="{{ onClear }}"></Button>
+        </GridLayout>
+    </StackLayout>
+</Page>

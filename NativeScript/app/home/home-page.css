@@ -1,0 +1,14 @@
+.unit-strength {
+  height: 45dp;
+  width: 45dp;
+  margin-top: 3dp;
+  margin-bottom: 3dp;
+  margin-right: 4dp;
+  margin-left: 4dp;
+  padding-top: 2dp;
+  padding-right: 2dp;
+  padding-bottom: 2dp;
+  padding-left: 2dp;
+  text-align: center;
+  font-size: 20dp;
+}
