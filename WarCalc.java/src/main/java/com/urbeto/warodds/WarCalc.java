@@ -1,7 +1,6 @@
 package com.urbeto.warodds;
-import java.util.Arrays;
 
-class WarCalc {
+public class WarCalc {
     private final static int MAX_ATTACKER_ARMY = 8;
     private final static int MAX_DEFENDER_ARMY = MAX_ATTACKER_ARMY * 4;
     private final static int HITS = 2;
@@ -10,11 +9,11 @@ class WarCalc {
     private final static int STATS = ATTACKER_STATS + DEFENDER_STATS;
     private final double [][] cache = new double [ATTACKER_STATS * DEFENDER_STATS][];
 
-    private double [] statistics;
+    private final double [] statistics;
     private final int[] attArmy;
     private final int[] defArmy;
 
-    private WarCalc(String defender, String attacker) {
+    WarCalc(String defender, String attacker) {
         if (defender.length() > MAX_DEFENDER_ARMY ) throw new IllegalArgumentException("Defender army is too big!");
         if (attacker.length() > MAX_ATTACKER_ARMY ) throw new IllegalArgumentException("Attacker army is too big!");
 
@@ -24,7 +23,7 @@ class WarCalc {
     }
 
     private int [] stringToArray(String str) {
-        int [] army = new int[str.length()];
+        final int [] army = new int[str.length()];
         for (int i = str.length(); i-->0; ) {
             char symbol = str.charAt(i);
             if (symbol >= '0' && symbol <= '9') army[i] = symbol - '0';
@@ -44,7 +43,6 @@ class WarCalc {
             }
             return cache[key];
         }
-
         if (cache[key] == null) {
             final double pA = calculateAttackerWinProbability(defState, attState);
             final double pD = 1 - pA;
@@ -53,8 +51,7 @@ class WarCalc {
             cache[key] = new double[STATS];
             for (int i = STATS; i-->0;) cache[key][i] = attStats[i] + defStats[i];
         }
-
-        double[] result = new double[STATS];
+        final double[] result = new double[STATS];
         for (int i = STATS; i-->0; ) result[i] = cache[key][i] * probability;
 
         return result;
@@ -84,13 +81,45 @@ class WarCalc {
         return 100 * defenderWinProbability();
     }
 
-    private void printStatistics() {
-        System.out.printf("Defender Army: %s%n", Arrays.toString(defArmy));
-        System.out.printf("Attacker Army: %s%n", Arrays.toString(attArmy));
-        System.out.printf(
-                "%nAttacker win: %6.2f%%%nDefender win: %6.2f%%%n"
-                , attackerWinPercent(), defenderWinPercent());
+    void printDefenderStatistics() {
+        System.out.printf("%n Defender win: %7.2f%%%n", defenderWinPercent());
+        StringBuilder header = new StringBuilder(" [ lose ] ");
+        StringBuilder data = new StringBuilder(String.format("%7.2f%%", statistics[0] * 100));
+        for (int i = 0; i < defArmy.length; ++i) {
+            if (i > 0 && i % 8 == 0 ) {
+                System.out.println(header);
+                System.out.println(data);
+                header = new StringBuilder("\n          ");
+                data =   new StringBuilder("        ");
+            }
+            header.append(String.format(" [%02d:%2d] ", i + 1, defArmy[i]));
+            final double probability = statistics[i * 2 + 1] + statistics[i * 2 + 2];
+            data.append(String.format("%8.2f%%", probability * 100));
+        }
+        System.out.println(header);
+        System.out.println(data);
     }
+
+    void printAttackerStatistics() {
+        System.out.printf("%n Attacker win: %7.2f%%%n", attackerWinPercent());
+        StringBuilder header = new StringBuilder(" [ lose ] ");
+        StringBuilder data = new StringBuilder(String.format("%7.2f%%", statistics[DEFENDER_STATS] * 100));
+        for (int i = 0; i < attArmy.length; ++i) {
+            header.append(String.format(" [%02d:%2d] ", i + 1, attArmy[i]));
+            double probability
+                    = statistics[DEFENDER_STATS + i * 2 + 1]
+                    + statistics[DEFENDER_STATS + i * 2 + 2];
+            data.append(String.format("%8.2f%%", probability * 100));
+        }
+        System.out.println(header);
+        System.out.println(data);
+    }
+
+    private void printStatistics() {
+        printDefenderStatistics();
+        printAttackerStatistics();
+    }
+
     public static void main(String[] args) {
         if (args.length == 2) {
             WarCalc testBattle = new WarCalc(args[0], args[1]);
