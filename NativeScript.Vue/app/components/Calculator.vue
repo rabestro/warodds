@@ -35,6 +35,15 @@
             <TextField v-model="defender[7]"
               class="-border unit-strength" row="0" col="7"
               hint="" maxLength="1" keyboardType="number" />
+
+            <Label v-for="(item, index) in defStats" 
+              :text="item | percentConverter" 
+              :row="1 + 2 * Math.trunc(index / 8)" 
+              :col="index % 8" 
+              :key="'as'+index" 
+              class="percent" />
+
+        <!--
             <Label class="percent" row="1" col="0"
               :text="defStats[0] | percentConverter" />
             <Label class="percent" row="1" col="1"
@@ -51,6 +60,7 @@
               :text="defStats[6] | percentConverter" />
             <Label class="percent" row="1" col="7"
               :text="defStats[7] | percentConverter" />
+              -->
             <TextField v-model="defender[8]"
               class="-border unit-strength" row="2" col="0"
               hint="" maxLength="1" keyboardType="number" />
@@ -75,10 +85,9 @@
             <TextField v-model="defender[15]"
               class="-border unit-strength" row="2" col="7"
               hint="" maxLength="1" keyboardType="number" />
-            <Label class="percent" row="3" col="0"
-              :text="defStats[8] | percentConverter" />
-            <Label class="percent" row="3" col="1"
-              :text="defStats[9] | percentConverter" />
+              <!--
+            <Label class="percent" row="3" col="0" :text="defStats[8] | percentConverter" />
+            <Label class="percent" row="3" col="1" :text="defStats[9] | percentConverter" />
             <Label class="percent" row="3" col="2"
               :text="defStats[10] | percentConverter" />
             <Label class="percent" row="3" col="3"
@@ -91,6 +100,7 @@
               :text="defStats[14] | percentConverter" />
             <Label class="percent" row="3" col="7"
               :text="defStats[15] | percentConverter" />
+              -->
             <TextField v-model="defender[16]"
               class="-border unit-strength" row="4" col="0"
               hint="" maxLength="1" keyboardType="number" />
@@ -117,6 +127,7 @@
               hint="" maxLength="1" keyboardType="number" />
             <Label class="percent" row="5" col="0"
               :text="defStats[16] | percentConverter" />
+              <!--
             <Label class="percent" row="5" col="1"
               :text="defStats[17] | percentConverter" />
             <Label class="percent" row="5" col="2"
@@ -131,6 +142,7 @@
               :text="defStats[22] | percentConverter" />
             <Label class="percent" row="5" col="7"
               :text="defStats[23] | percentConverter" />
+              -->
             <TextField v-model="defender[24]"
               class="-border unit-strength" row="6" col="0"
               hint="" maxLength="1" keyboardType="number" />
@@ -155,6 +167,7 @@
             <TextField v-model="defender[31]"
               class="-border unit-strength" row="6" col="7"
               hint="" maxLength="1" keyboardType="number" />
+              <!--
             <Label class="percent" row="7" col="0"
               :text="defStats[24] | percentConverter" />
             <Label class="percent" row="7" col="1"
@@ -169,8 +182,8 @@
               :text="defStats[29] | percentConverter" />
             <Label class="percent" row="7" col="6"
               :text="defStats[30] | percentConverter" />
-            <Label class="percent" row="7" col="7"
-              :text="defStats[31] | percentConverter" />
+            <Label class="percent" row="7" col="7" :text="defStats[31] | percentConverter" />
+            -->
           </GridLayout>
         </StackLayout>
         <!--Attacker-->
@@ -181,12 +194,11 @@
           </GridLayout>
           <GridLayout columns="*,*,*,*,*,*,*,*"
             rows="auto, auto, auto, auto">
-            <TextField v-model="attacker[0]"
-              class="-border unit-strength" row="0" col="0"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="attacker[1]"
-              class="-border unit-strength" row="0" col="1"
-              hint="" maxLength="1" keyboardType="number" />
+
+            <TextField v-model="attacker[0]" class="-border unit-strength" row="0" col="0"
+              hint="" maxLength="1" keyboardType="number" @textChange="ontextChange" name="A01"/>
+            <TextField v-model="attacker[1]" class="-border unit-strength" row="0" col="1"
+              hint="" maxLength="1" keyboardType="number" @textChange="ontextChange" name="A02"/>
             <TextField v-model="attacker[2]"
               class="-border unit-strength" row="0" col="2"
               hint="" maxLength="1" keyboardType="number" />
@@ -205,14 +217,10 @@
             <TextField v-model="attacker[7]"
               class="-border unit-strength" row="0" col="7"
               hint="" maxLength="1" keyboardType="number" />
-            <Label class="percent" row="1" col="0" :text="attStats[0] | percentConverter" />
-            <Label class="percent" row="1" col="1" :text="attStats[1] | percentConverter" />
-            <Label class="percent" row="1" col="2" :text="attStats[2] | percentConverter" />
-            <Label class="percent" row="1" col="3" :text="attStats[3] | percentConverter" />
-            <Label class="percent" row="1" col="4" :text="attStats[4] | percentConverter" />
-            <Label class="percent" row="1" col="5" :text="attStats[5] | percentConverter" />
-            <Label class="percent" row="1" col="6" :text="attStats[6] | percentConverter" />
-            <Label class="percent" row="1" col="7" :text="attStats[7] | percentConverter" />
+
+            <Label v-for="(item, index) in attStats" :text="item | percentConverter" 
+            class="percent" row="1" :col="index" :key="'as'+index"/>
+
           </GridLayout>
           <GridLayout rows="auto" columns="*,*">
             <Button class="-primary" row="0" col="0" text="CALCULATE" @tap="onCalculate()"></Button>
@@ -232,11 +240,11 @@
     data() {
       return {
         defender: [
-          "9",
-          "8",
-          "7",
-          "7",
-          "7",
+          "",
+          "",
+          "",
+          "",
+          "",
           "",
           "",
           "",
@@ -265,7 +273,7 @@
           "",
           ""
         ],
-        attacker: ["9", "8", "", "", "", "", "", ""],
+        attacker: ["", "", "", "", "", "", "", ""],
         defStats: [
           "",
           "",
@@ -333,6 +341,10 @@
         this.attWinPercent = statistics.attacker.reduce((sum, current) => sum + current, 0);
         this.defWinPercent = statistics.defender.reduce((sum, current) => sum + current, 0);
 
+      },
+      ontextChange(args){
+        // console.dir(args.object.key);
+        // console.dir(args.object.ref);
       },
       onClear() {
         console.log("Clear");        
