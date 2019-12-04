@@ -40,7 +40,7 @@
               :text="item | percentConverter" 
               :row="1 + 2 * Math.trunc(index / 8)" 
               :col="index % 8" 
-              :key="'as'+index" 
+              :key="'ds'+index" 
               class="percent" />
 
         <!--
@@ -218,8 +218,12 @@
               class="-border unit-strength" row="0" col="7"
               hint="" maxLength="1" keyboardType="number" />
 
-            <Label v-for="(item, index) in attStats" :text="item | percentConverter" 
-            class="percent" row="1" :col="index" :key="'as'+index"/>
+            <Label v-for="(item, index) in attStats" 
+              :text="item | percentConverter" 
+              :col="index" 
+              :key="'as'+index"
+              row="1"
+              class="percent" />
 
           </GridLayout>
           <GridLayout rows="auto" columns="*,*">
