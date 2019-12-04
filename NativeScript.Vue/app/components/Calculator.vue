@@ -1,228 +1,55 @@
 <template>
   <Page>
     <ActionBar title="Warlords Classic Battle Odds Calculator" />
-    <ScrollView>
       <StackLayout class="home-panel">
         <!--Defender-->
-        <StackLayout>
-          <GridLayout style="margin-top: 15dp" columns="*, *" rows="auto" backgroundColor="lightgray">
-            <Label row="0" col="0" text="Defender" />
-            <Label row="0" col="1" textAlignment="right" :text="defWinPercent | percentConverter" />
-          </GridLayout>
-          <GridLayout columns="*,*,*,*,*,*,*,*"
-            rows="auto, auto, auto, auto, auto, auto, auto, auto">
-            <TextField v-model="defender[0]"
-              class="-border unit-strength" row="0" col="0"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[1]"
-              class="-border unit-strength" row="0" col="1"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[2]"
-              class="-border unit-strength" row="0" col="2"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[3]"
-              class="-border unit-strength" row="0" col="3"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[4]"
-              class="-border unit-strength" row="0" col="4"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[5]"
-              class="-border unit-strength" row="0" col="5"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[6]"
-              class="-border unit-strength" row="0" col="6"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[7]"
-              class="-border unit-strength" row="0" col="7"
-              hint="" maxLength="1" keyboardType="number" />
+          <GridLayout columns="auto,auto,auto,auto,auto,auto,auto,auto"
+            rows="auto, auto, auto, auto, auto, auto, auto, auto, auto">
+
+            <Label row="0" col="0" colSpan="4" text="Defender" style="padding-left: 5" backgroundColor="lightgray" />
+            <Label row="0" col="4" colSpan="4" textAlignment="right" class="nt-label" backgroundColor="lightgray">{{ defWinPercent | percentConverter }} </Label>
+
+            <TextField  v-for="(item, index) in defender" 
+              v-model="defender[index]" 
+              :key="'d'+index"
+              :col="index % 8"
+              :row="1 + 2 * Math.trunc(index / 8)" 
+              maxLength="1" 
+              keyboardType="number"
+              class="-border unit-strength"  
+              hint=""
+              @textChange="ontextChange" />
 
             <Label v-for="(item, index) in defStats" 
               :text="item | percentConverter" 
-              :row="1 + 2 * Math.trunc(index / 8)" 
+              :row="2 + 2 * Math.trunc(index / 8)" 
               :col="index % 8" 
               :key="'ds'+index" 
               class="percent" />
-
-        <!--
-            <Label class="percent" row="1" col="0"
-              :text="defStats[0] | percentConverter" />
-            <Label class="percent" row="1" col="1"
-              :text="defStats[1] | percentConverter" />
-            <Label class="percent" row="1" col="2"
-              :text="defStats[2] | percentConverter" />
-            <Label class="percent" row="1" col="3"
-              :text="defStats[3] | percentConverter" />
-            <Label class="percent" row="1" col="4"
-              :text="defStats[4] | percentConverter" />
-            <Label class="percent" row="1" col="5"
-              :text="defStats[5] | percentConverter" />
-            <Label class="percent" row="1" col="6"
-              :text="defStats[6] | percentConverter" />
-            <Label class="percent" row="1" col="7"
-              :text="defStats[7] | percentConverter" />
-              -->
-            <TextField v-model="defender[8]"
-              class="-border unit-strength" row="2" col="0"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[9]"
-              class="-border unit-strength" row="2" col="1"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[10]"
-              class="-border unit-strength" row="2" col="2"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[11]"
-              class="-border unit-strength" row="2" col="3"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[12]"
-              class="-border unit-strength" row="2" col="4"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[13]"
-              class="-border unit-strength" row="2" col="5"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[14]"
-              class="-border unit-strength" row="2" col="6"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[15]"
-              class="-border unit-strength" row="2" col="7"
-              hint="" maxLength="1" keyboardType="number" />
-              <!--
-            <Label class="percent" row="3" col="0" :text="defStats[8] | percentConverter" />
-            <Label class="percent" row="3" col="1" :text="defStats[9] | percentConverter" />
-            <Label class="percent" row="3" col="2"
-              :text="defStats[10] | percentConverter" />
-            <Label class="percent" row="3" col="3"
-              :text="defStats[11] | percentConverter" />
-            <Label class="percent" row="3" col="4"
-              :text="defStats[12] | percentConverter" />
-            <Label class="percent" row="3" col="5"
-              :text="defStats[13] | percentConverter" />
-            <Label class="percent" row="3" col="6"
-              :text="defStats[14] | percentConverter" />
-            <Label class="percent" row="3" col="7"
-              :text="defStats[15] | percentConverter" />
-              -->
-            <TextField v-model="defender[16]"
-              class="-border unit-strength" row="4" col="0"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[17]"
-              class="-border unit-strength" row="4" col="1"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[18]"
-              class="-border unit-strength" row="4" col="2"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[19]"
-              class="-border unit-strength" row="4" col="3"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[20]"
-              class="-border unit-strength" row="4" col="4"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[21]"
-              class="-border unit-strength" row="4" col="5"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[22]"
-              class="-border unit-strength" row="4" col="6"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[23]"
-              class="-border unit-strength" row="4" col="7"
-              hint="" maxLength="1" keyboardType="number" />
-            <Label class="percent" row="5" col="0"
-              :text="defStats[16] | percentConverter" />
-              <!--
-            <Label class="percent" row="5" col="1"
-              :text="defStats[17] | percentConverter" />
-            <Label class="percent" row="5" col="2"
-              :text="defStats[18] | percentConverter" />
-            <Label class="percent" row="5" col="3"
-              :text="defStats[19] | percentConverter" />
-            <Label class="percent" row="5" col="4"
-              :text="defStats[20] | percentConverter" />
-            <Label class="percent" row="5" col="5"
-              :text="defStats[21] | percentConverter" />
-            <Label class="percent" row="5" col="6"
-              :text="defStats[22] | percentConverter" />
-            <Label class="percent" row="5" col="7"
-              :text="defStats[23] | percentConverter" />
-              -->
-            <TextField v-model="defender[24]"
-              class="-border unit-strength" row="6" col="0"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[25]"
-              class="-border unit-strength" row="6" col="1"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[26]"
-              class="-border unit-strength" row="6" col="2"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[27]"
-              class="-border unit-strength" row="6" col="3"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[28]"
-              class="-border unit-strength" row="6" col="4"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[29]"
-              class="-border unit-strength" row="6" col="5"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[30]"
-              class="-border unit-strength" row="6" col="6"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="defender[31]"
-              class="-border unit-strength" row="6" col="7"
-              hint="" maxLength="1" keyboardType="number" />
-              <!--
-            <Label class="percent" row="7" col="0"
-              :text="defStats[24] | percentConverter" />
-            <Label class="percent" row="7" col="1"
-              :text="defStats[25] | percentConverter" />
-            <Label class="percent" row="7" col="2"
-              :text="defStats[26] | percentConverter" />
-            <Label class="percent" row="7" col="3"
-              :text="defStats[27] | percentConverter" />
-            <Label class="percent" row="7" col="4"
-              :text="defStats[28] | percentConverter" />
-            <Label class="percent" row="7" col="5"
-              :text="defStats[29] | percentConverter" />
-            <Label class="percent" row="7" col="6"
-              :text="defStats[30] | percentConverter" />
-            <Label class="percent" row="7" col="7" :text="defStats[31] | percentConverter" />
-            -->
           </GridLayout>
-        </StackLayout>
+
         <!--Attacker-->
-        <StackLayout>
-          <GridLayout style="margin-top: 15dp" columns="*, *" rows="auto" backgroundColor="lightgray">
-            <Label row="0" col="0" text="Attacker" />
-            <Label row="0" col="1" textAlignment="right" :text="attWinPercent | percentConverter" />
-          </GridLayout>
-          <GridLayout columns="*,*,*,*,*,*,*,*"
-            rows="auto, auto, auto, auto">
+        <StackLayout class="nt-form">
+          <GridLayout columns="auto,auto,auto,auto,auto,auto,auto,auto" rows="auto,auto, auto" style="margin-top: 15dp" >
+            <Label row="0" col="0" colSpan="4" text="Attacker"  style="padding-left: 5" backgroundColor="lightgray"/>
+            <Label row="0" col="4" colSpan="4" textAlignment="right" :text="attWinPercent | percentConverter" backgroundColor="lightgray" />
 
-            <TextField v-model="attacker[0]" class="-border unit-strength" row="0" col="0"
-              hint="" maxLength="1" keyboardType="number" @textChange="ontextChange" name="A01"/>
-            <TextField v-model="attacker[1]" class="-border unit-strength" row="0" col="1"
-              hint="" maxLength="1" keyboardType="number" @textChange="ontextChange" name="A02"/>
-            <TextField v-model="attacker[2]"
-              class="-border unit-strength" row="0" col="2"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="attacker[3]"
-              class="-border unit-strength" row="0" col="3"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="attacker[4]"
-              class="-border unit-strength" row="0" col="4"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="attacker[5]"
-              class="-border unit-strength" row="0" col="5"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="attacker[6]"
-              class="-border unit-strength" row="0" col="6"
-              hint="" maxLength="1" keyboardType="number" />
-            <TextField v-model="attacker[7]"
-              class="-border unit-strength" row="0" col="7"
-              hint="" maxLength="1" keyboardType="number" />
+            <TextField  v-for="(item, index) in attacker" 
+              v-model="attacker[index]" 
+              :key="'a'+index"
+              :col="index"
+              row="1"
+              maxLength="1" 
+              keyboardType="number"
+              class="-border unit-strength"  
+              hint=""
+              @textChange="ontextChange" />
 
             <Label v-for="(item, index) in attStats" 
               :text="item | percentConverter" 
               :col="index" 
               :key="'as'+index"
-              row="1"
+              row="2"
               class="percent" />
 
           </GridLayout>
@@ -232,7 +59,6 @@
           </GridLayout>
         </StackLayout>
       </StackLayout>
-    </ScrollView>
   </Page>
 </template>
 
@@ -277,42 +103,9 @@
           "",
           ""
         ],
-        attacker: ["", "", "", "", "", "", "", ""],
-        defStats: [
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          ""
-        ],
-        attStats: [0, 0, 0, 0, 0, 0, 0, 0],
+        attacker: ['', '', '', '', '', '', '', ''],
+        defStats: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        attStats: [0,0,0,0,0,0,0,0],
         defWinPercent: 0,
         attWinPercent: 0
       };
@@ -337,11 +130,11 @@
     methods: {
       onCalculate() {
         console.log("Calculate");
-        const statistics = collectStatistics(this.attacker, this.defender, 1000);
+        const statistics = collectStatistics(this.attacker, this.defender, 10000);
         console.dir(statistics);
 
         this.defStats.forEach((x, i, a) => (a[i] = statistics.defender[i]));
-        this.attStats.forEach( (x, i, a) => (a[i] = statistics.attacker[i]));
+        this.attStats.forEach((x, i, a) => (a[i] = statistics.attacker[i]));
         this.attWinPercent = statistics.attacker.reduce((sum, current) => sum + current, 0);
         this.defWinPercent = statistics.defender.reduce((sum, current) => sum + current, 0);
 
@@ -371,7 +164,7 @@
   .home-panel {
     vertical-align: center;
     font-size: 20;
-    margin: 15;
+    margin: 14;
   }
 
   .description-label {
@@ -379,18 +172,18 @@
   }
 
   .unit-strength {
-    height: 45dp;
-    width: 45dp;
-    margin-top: 3dp;
-    margin-bottom: 3dp;
-    margin-right: 4dp;
-    margin-left: 4dp;
-    padding-top: 2dp;
-    padding-right: 2dp;
-    padding-bottom: 2dp;
-    padding-left: 2dp;
+    height: 44;
+    width: 44;
+    margin-top: 3;
+    margin-bottom: 3;
+    margin-right: 2;
+    margin-left: 2;
+    padding-top: 1;
+    padding-right: 1;
+    padding-bottom: 1;
+    padding-left: 1;
     text-align: center;
-    font-size: 20dp;
+    font-size: 20;
   }
 
   .percent {

@@ -2,7 +2,7 @@
     "description": "NativeScript Application",
     "license": "SEE LICENSE IN <your-license-filename>",
     "readme": "NativeScript Application",
-    "repository": "<fill-your-repository-here>",
+    "repository": "https://github.com/rabestro/WarOdds",
     "nativescript": {
         "id": "org.nativescript.playvue",
         "tns-android": {
