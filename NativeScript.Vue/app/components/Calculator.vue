@@ -12,13 +12,15 @@
             <TextField  v-for="(item, index) in defender" 
               v-model="defender[index]" 
               :key="'d'+index"
+              :ref="'ref'+index"
               :col="index % 8"
               :row="1 + 2 * Math.trunc(index / 8)" 
               maxLength="1" 
               keyboardType="number"
               class="-border unit-strength"  
               hint=""
-              @textChange="ontextChange" />
+              @textChange="onTextChange(index)" 
+              @focus="onFocus(index)"/>
 
             <Label v-for="(item, index) in defStats" 
               :text="item | percentConverter" 
@@ -43,7 +45,7 @@
               keyboardType="number"
               class="-border unit-strength"  
               hint=""
-              @textChange="ontextChange" />
+              @textChange="onTextChange" />
 
             <Label v-for="(item, index) in attStats" 
               :text="item | percentConverter" 
@@ -63,46 +65,14 @@
 </template>
 
 <script>
-  import collectStatistics from "./collect-statistics";
+  import calculateBattle from "./calculate-battle";
   const intl = require("nativescript-intl");
 
   export default {
     data() {
       return {
-        defender: [
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          ""
-        ],
+        defender: ['','','','','','','','','','','','','','','','','',''
+                  ,'','','','','','','','','','','','','',''],
         attacker: ['', '', '', '', '', '', '', ''],
         defStats: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
         attStats: [0,0,0,0,0,0,0,0],
@@ -129,22 +99,25 @@
     },
     methods: {
       onCalculate() {
-        console.log("Calculate");
-        const statistics = collectStatistics(this.attacker, this.defender, 10000);
-        console.dir(statistics);
+        const defArmy = [];
+        const attArmy = [];
+        for (let strength of this.defender) if (strength) defArmy.push(strength);
+        for (let strength of this.attacker) if (strength) attArmy.push(strength);
 
-        this.defStats.forEach((x, i, a) => (a[i] = statistics.defender[i]));
-        this.attStats.forEach((x, i, a) => (a[i] = statistics.attacker[i]));
-        this.attWinPercent = statistics.attacker.reduce((sum, current) => sum + current, 0);
-        this.defWinPercent = statistics.defender.reduce((sum, current) => sum + current, 0);
+        const result = calculateBattle(defArmy, attArmy);
 
+        this.defWinPercent = 1 - result[0];
+        this.attWinPercent = 1 - result[65];
+        this.defStats.forEach((x, i, a) => (a[i] = result[1 + i * 2] + result[2 + i * 2]));
+        this.attStats.forEach((x, i, a) => (a[i] = result[66 + i * 2] + result[67 + i * 2]));
       },
-      ontextChange(args){
-        // console.dir(args.object.key);
-        // console.dir(args.object.ref);
+      onTextChange(args){
+        // console.log("textChange")
       },
-      onClear() {
-        console.log("Clear");        
+      onFocus(args){
+        // console.log("onFocus")
+      },
+      onClear() {    
         this.defWinPercent = 0;
         this.attWinPercent = 0;
         for (let i = 8; i-- > 0;) {
