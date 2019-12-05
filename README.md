@@ -4,7 +4,7 @@ The repository contains source code for several programs consigned to calculate 
 
 ## WarOdds calculator for Android/iOS
 
-The version of calculator for Android/iOS is created used NativeScript framework. The very first version was written used NativeScript Core and used old algorithm. The algorithm used Monte Carlo method and does not accurate and fast as desired. So I designed the new algorim to calculate the whole battle analyticaly independ of size of amyes. The version of application also re-writed by NativeScript Vue.
+The version of calculator for Android/iOS is created used NativeScript framework. The very first version was written used NativeScript Core and utilyze Monte Carlo method. It was not accurate and fast as desired. So I designed the new algorim to calculate the whole battle analyticaly independ of size of amyes. The version of application also re-writed by NativeScript Vue.
 
 ## WarOdds console calculator
 
@@ -16,4 +16,3 @@ Before start to code NativeScript application I have tested algorithms in Google
 
 1. [Battle Odds Calculator](https://docs.google.com/spreadsheets/d/1fV6ZTT-svuXWK-zfhH0Wu5UhQnFzhZ1_lIkksxyq60M/)
 2. [Battle One2One Odds Charts](https://docs.google.com/spreadsheets/d/1ou9U7EJTYB_u3idbwfkAwBgYeWnDuyNZqPQVHiBfaLU/edit?usp=sharing)
-
