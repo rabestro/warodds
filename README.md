@@ -2,13 +2,13 @@
 
 The repository contains source code for several programs consigned to calculate battle odds for old  strategy game [Warlords Classic](https://en.wikipedia.org/wiki/Warlords_(1990_video_game)). You can obtain the [modern port](https://apps.apple.com/ru/app/warlords-classic-strategy/id532024361?l=en) of the game for Apple iPad or iPhone.
 
-## WarOdds calculator for Android/iOS
+## WarOdds calculator for Android
 
-The version of calculator for Android/iOS is created used NativeScript framework. The very first version was written used NativeScript Core and utilyze Monte Carlo method. It was not accurate and fast as desired. So I designed the new algorim to calculate the whole battle analyticaly independ of size of amyes. The version of application also re-writed by NativeScript Vue.
+The version of calculator for Android is created used NativeScript framework. The very first version was written used NativeScript Core and utilyze Monte Carlo method. It was not accurate and fast as desired. So I designed the new algorim to calculate the whole battle analyticaly independ of size of amyes. The version of application also rewritten by NativeScript Vue.
 
 ## WarOdds console calculator
 
-During the development the new algorithm for calculation I write a simple console programm in Java. The source codes in warcalc.java directory.
+During the development the new algorithm for calculation I write a simple [console programm](https://github.com/rabestro/WarOdds/releases/tag/0.2) in Java. The source codes in warcalc.java directory.
 
 ## WarOdds Google Sheets
 
