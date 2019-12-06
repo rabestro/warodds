@@ -7,8 +7,7 @@ export default function calculateBattle(defArmy, attArmy) {
   const STATS = ATTACKER_STATS + DEFENDER_STATS;
   const cache = new Array(ATTACKER_STATS * DEFENDER_STATS);
 
-  const statistics = calculateStatistics(1, defArmy.length * 2, attArmy.length * 2);
-  return statistics;
+  return calculateStatistics(1, defArmy.length * HITS, attArmy.length * HITS);
 
   function calculateStatistics(probability, defState, attState) {
     const key = defState + DEFENDER_STATS * attState;
@@ -21,23 +20,21 @@ export default function calculateBattle(defArmy, attArmy) {
       }
       return cache[key];
     }
-    if (cache[key] === undefined) {
-        const pA = attackerWinProbability(defState, attState);
-        const pD = 1 - pA;
+    if (cache[key] === undefined) {  
+        const defStrength = defArmy[Math.floor((defState - 1) / HITS)];
+        const attStrength = attArmy[Math.floor((attState - 1) / HITS)];
+        const pA = attackerWinProbability(defStrength, attStrength);
         const attStats = calculateStatistics(pA, defState - 1, attState);
-        const defStats = calculateStatistics(pD, defState, attState - 1);
+        const defStats = calculateStatistics(1 - pA, defState, attState - 1);
         cache[key] = new Array(STATS);
         for (let i = STATS; i-->0;) cache[key][i] = attStats[i] + defStats[i];
     }
     const result = new Array(STATS);
     for (let i = STATS; i-->0;) result[i] = cache[key][i] * probability;
-
-  return result;
+    return result;
   }
 
-  function attackerWinProbability(defState, attState) {
-    const defStrength = defArmy[Math.floor((defState - 1) / 2)];
-    const attStrength = attArmy[Math.floor((attState - 1) / 2)];
+  function attackerWinProbability(defStrength, attStrength) {
     const Pa = attStrength * (10 - defStrength) / 100;
     const Pd = defStrength * (10 - attStrength) / 100;
     return Pa / (Pa + Pd);
