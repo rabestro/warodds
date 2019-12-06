@@ -6,20 +6,21 @@
           <GridLayout columns="auto,auto,auto,auto,auto,auto,auto,auto"
             rows="auto, auto, auto, auto, auto, auto, auto, auto, auto">
 
-            <Label row="0" col="0" colSpan="4" text="Defender" style="padding-left: 5" backgroundColor="lightgray" />
-            <Label row="0" col="4" colSpan="4" textAlignment="right" class="nt-label" backgroundColor="lightgray">{{ defWinPercent | percentConverter }} </Label>
+            <Label row="0" col="0" colSpan="4" text="Defender" style="padding-left: 5" />
+            <Label row="0" col="4" colSpan="4" textAlignment="right" class="nt-label" >{{ defWinPercent | percentConverter }} </Label>
 
             <TextField  v-for="(item, index) in defender" 
               v-model="defender[index]" 
               :key="'d'+index"
-              :ref="'ref'+index"
               :col="index % 8"
               :row="1 + 2 * Math.trunc(index / 8)" 
               maxLength="1" 
               keyboardType="number"
+              returnKeyType="next"
               class="-border unit-strength"  
               hint=""
-              @textChange="onTextChange(index)" 
+              ref="defender"
+              @textChange="onChangeDefender(index)" 
               @focus="onFocus(index)"/>
 
             <Label v-for="(item, index) in defStats" 
@@ -33,8 +34,8 @@
         <!--Attacker-->
         <StackLayout class="nt-form">
           <GridLayout columns="auto,auto,auto,auto,auto,auto,auto,auto" rows="auto,auto, auto" style="margin-top: 15dp" >
-            <Label row="0" col="0" colSpan="4" text="Attacker"  style="padding-left: 5" backgroundColor="lightgray"/>
-            <Label row="0" col="4" colSpan="4" textAlignment="right" :text="attWinPercent | percentConverter" backgroundColor="lightgray" />
+            <Label row="0" col="0" colSpan="4" text="Attacker"  style="padding-left: 5" />
+            <Label row="0" col="4" colSpan="4" textAlignment="right" :text="attWinPercent | percentConverter" />
 
             <TextField  v-for="(item, index) in attacker" 
               v-model="attacker[index]" 
@@ -43,9 +44,11 @@
               row="1"
               maxLength="1" 
               keyboardType="number"
+              returnKeyType="next"
               class="-border unit-strength"  
               hint=""
-              @textChange="onTextChange" />
+              ref="attacker"
+              @textChange="onChangeAttacker(index)" />
 
             <Label v-for="(item, index) in attStats" 
               :text="item | percentConverter" 
@@ -56,8 +59,9 @@
 
           </GridLayout>
           <GridLayout rows="auto" columns="*,*">
-            <Button class="-primary" row="0" col="0" text="CALCULATE" @tap="onCalculate()"></Button>
-            <Button class="" row="0" col="1" text="CLEAR" @tap="onClear()"></Button>
+            <Button class="-primary" row="0" col="0" text="CALCULATE" 
+              @tap="onCalculate()" ref="calculate"></Button>
+            <Button class="" row="0" col="1" text="CLEAR" @tap="onClear()"  ref="clear"></Button>
           </GridLayout>
         </StackLayout>
       </StackLayout>
@@ -67,6 +71,7 @@
 <script>
   import calculateBattle from "./calculate-battle";
   const intl = require("nativescript-intl");
+  // let wasEmpty = false;
 
   export default {
     data() {
@@ -79,6 +84,16 @@
         defWinPercent: 0,
         attWinPercent: 0
       };
+    },
+    created: function () {
+      // this.$refs.defender[0].nativeView.focus();
+    },
+    mounted: function () {
+      this.$nextTick(function () {
+        // Код, который будет запущен только после
+        // отображения всех представлений
+        this.$refs.defender[0].nativeView.focus();
+      })
     },
     filters: {
       percentConverter: function(value) {
@@ -111,8 +126,17 @@
         this.defStats.forEach((x, i, a) => (a[i] = result[1 + i * 2] + result[2 + i * 2]));
         this.attStats.forEach((x, i, a) => (a[i] = result[66 + i * 2] + result[67 + i * 2]));
       },
-      onTextChange(args){
-        // console.log("textChange")
+      onChangeDefender(index){
+        if (this.defender[index]) 
+          if (index < 31) this.$refs.defender[index + 1].nativeView.focus();
+          else this.$refs.attacker[0].nativeView.focus();
+        else if (index > 0)  this.$refs.defender[index - 1].nativeView.focus();
+      },
+      onChangeAttacker(index){
+        if (this.attacker[index]) 
+          if (index < 7) this.$refs.attacker[index + 1].nativeView.focus();
+          else this.$refs.calculate.nativeView.focus();
+        else if (index > 0)  this.$refs.attacker[index - 1].nativeView.focus();
       },
       onFocus(args){
         // console.log("onFocus")
@@ -128,6 +152,7 @@
           this.defender[i] = "";
           this.defStats[i] = 0;
         }
+        this.$refs.defender[0].nativeView.focus();
       }
     }
   };
@@ -135,7 +160,7 @@
 
 <style scoped>
   .home-panel {
-    vertical-align: center;
+    vertical-align: top;
     font-size: 20;
     margin: 14;
   }
