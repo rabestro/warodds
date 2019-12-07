@@ -7,7 +7,7 @@
             rows="auto, auto, auto, auto, auto, auto, auto, auto, auto">
 
             <Label row="0" col="0" colSpan="4" text="Defender" style="padding-left: 5" />
-            <Label row="0" col="4" colSpan="4" textAlignment="right" class="nt-label" >{{ defWinPercent | percentConverter }} </Label>
+            <Label row="0" col="4" colSpan="4" textAlignment="right" >{{ defWinPercent | percentConverter }} </Label>
 
             <TextField  v-for="(item, index) in defender" 
               v-model="defender[index]" 
@@ -21,7 +21,7 @@
               hint=""
               ref="defender"
               @textChange="onChangeDefender(index)" 
-              @focus="onFocus(index)"/>
+              />
 
             <Label v-for="(item, index) in defStats" 
               :text="item | percentConverter" 
@@ -76,24 +76,13 @@
   export default {
     data() {
       return {
-        defender: ['','','','','','','','','','','','','','','','','',''
-                  ,'','','','','','','','','','','','','',''],
-        attacker: ['', '', '', '', '', '', '', ''],
-        defStats: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        attStats: [0,0,0,0,0,0,0,0],
+        defender: new Array(32).fill(''),
+        attacker: new Array(8).fill(''),
+        defStats: new Array(32).fill(0),
+        attStats: new Array(8).fill(0),
         defWinPercent: 0,
         attWinPercent: 0
       };
-    },
-    created: function () {
-      // this.$refs.defender[0].nativeView.focus();
-    },
-    mounted: function () {
-      this.$nextTick(function () {
-        // Код, который будет запущен только после
-        // отображения всех представлений
-        this.$refs.defender[0].nativeView.focus();
-      })
     },
     filters: {
       percentConverter: function(value) {
@@ -127,16 +116,14 @@
         this.attStats.forEach((x, i, a) => (a[i] = result[66 + i * 2] + result[67 + i * 2]));
       },
       onChangeDefender(index){
-        if (this.defender[index]) 
-          if (index < 31) this.$refs.defender[index + 1].nativeView.focus();
-          else this.$refs.attacker[0].nativeView.focus();
-        else if (index > 0)  this.$refs.defender[index - 1].nativeView.focus();
+        if (!this.defender[index]) return;
+        if (index < 31) this.$refs.defender[index + 1].nativeView.focus();
+        else this.$refs.attacker[0].nativeView.focus();
       },
       onChangeAttacker(index){
-        if (this.attacker[index]) 
-          if (index < 7) this.$refs.attacker[index + 1].nativeView.focus();
-          else this.$refs.calculate.nativeView.focus();
-        else if (index > 0)  this.$refs.attacker[index - 1].nativeView.focus();
+        if (!this.attacker[index]) return;
+        if (index < 7) this.$refs.attacker[index + 1].nativeView.focus();
+        else this.$refs.calculate.nativeView.focus();
       },
       onFocus(args){
         // console.log("onFocus")
