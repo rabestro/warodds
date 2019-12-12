@@ -71,7 +71,6 @@
 <script>
   import calculateBattle from "./calculate-battle";
   const intl = require("nativescript-intl");
-  // let wasEmpty = false;
 
   export default {
     data() {
