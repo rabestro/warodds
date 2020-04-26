@@ -1,5 +1,6 @@
 package com.urbeto.warodds;
 
+import static java.lang.String.format;
 import static java.util.stream.IntStream.range;
 
 public class WarCalc {
@@ -87,7 +88,7 @@ public class WarCalc {
     void printDefenderStatistics() {
         System.out.printf("%n Defender win: %7.2f%%%n", defenderWinPercent());
         StringBuilder header = new StringBuilder(" [ lose ] ");
-        StringBuilder data = new StringBuilder(String.format("%7.2f%%", statistics[0] * 100));
+        StringBuilder data = new StringBuilder(format("%7.2f%%", statistics[0] * 100));
         for (int i = 0; i < defArmy.length; ++i) {
             if (i > 0 && i % 8 == 0 ) {
                 System.out.println(header);
@@ -95,9 +96,9 @@ public class WarCalc {
                 header = new StringBuilder("\n          ");
                 data =   new StringBuilder("        ");
             }
-            header.append(String.format(" [%02d:%2d] ", i + 1, defArmy[i]));
+            header.append(format(" [%02d:%2d] ", i + 1, defArmy[i]));
             final double probability = statistics[i * 2 + 1] + statistics[i * 2 + 2];
-            data.append(String.format("%8.2f%%", probability * 100));
+            data.append(format("%8.2f%%", probability * 100));
         }
         System.out.println(header);
         System.out.println(data);
@@ -106,13 +107,13 @@ public class WarCalc {
     void printAttackerStatistics() {
         System.out.printf("%n Attacker win: %7.2f%%%n", attackerWinPercent());
         StringBuilder header = new StringBuilder(" [ lose ] ");
-        StringBuilder data = new StringBuilder(String.format("%7.2f%%", statistics[DEFENDER_STATS] * 100));
+        StringBuilder data = new StringBuilder(format("%7.2f%%", statistics[DEFENDER_STATS] * 100));
         for (int i = 0; i < attArmy.length; ++i) {
-            header.append(String.format(" [%02d:%2d] ", i + 1, attArmy[i]));
+            header.append(format(" [%02d:%2d] ", i + 1, attArmy[i]));
             double probability
                     = statistics[DEFENDER_STATS + i * 2 + 1]
                     + statistics[DEFENDER_STATS + i * 2 + 2];
-            data.append(String.format("%8.2f%%", probability * 100));
+            data.append(format("%8.2f%%", probability * 100));
         }
         System.out.println(header);
         System.out.println(data);
