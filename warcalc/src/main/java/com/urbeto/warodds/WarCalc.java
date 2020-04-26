@@ -1,5 +1,7 @@
 package com.urbeto.warodds;
 
+import static java.util.stream.IntStream.range;
+
 public class WarCalc {
     private final static int MAX_ATTACKER_ARMY = 8;
     private final static int MAX_DEFENDER_ARMY = MAX_ATTACKER_ARMY * 4;
@@ -23,13 +25,7 @@ public class WarCalc {
     }
 
     private int [] stringToArray(String str) {
-        final int [] army = new int[str.length()];
-        for (int i = str.length(); i-->0; ) {
-            char symbol = str.charAt(i);
-            if (symbol >= '0' && symbol <= '9') army[i] = symbol - '0';
-            else throw new IllegalArgumentException("Only digits allowed!");
-        }
-        return army;
+        return str.chars().map(i -> i - '0').toArray();
     }
 
     private double[] calculateStatistics(double probability, int defState, int attState) {
@@ -48,13 +44,10 @@ public class WarCalc {
             final double pD = 1 - pA;
             final double[] attStats = calculateStatistics(pA, defState - 1, attState);
             final double[] defStats = calculateStatistics(pD, defState, attState - 1);
-            cache[key] = new double[STATS];
-            for (int i = STATS; i-->0;) cache[key][i] = attStats[i] + defStats[i];
-        }
-        final double[] result = new double[STATS];
-        for (int i = STATS; i-->0; ) result[i] = cache[key][i] * probability;
 
-        return result;
+            cache[key] = range(0, STATS).mapToDouble(i -> attStats[i] + defStats[i]).toArray();
+        }
+        return range(0, STATS).mapToDouble(i -> cache[key][i] * probability).toArray();
     }
 
     private double calculateAttackerWinProbability(int defState, int attState) {
@@ -79,6 +72,16 @@ public class WarCalc {
 
     double defenderWinPercent() {
         return 100 * defenderWinProbability();
+    }
+
+    public static void main(String[] args) {
+        if (args.length == 2) {
+            WarCalc testBattle = new WarCalc(args[0], args[1]);
+            testBattle.printStatistics();
+        } else {
+            System.out.println("Usage: WarCalc <Defender Army> <Attacker Army>");
+            System.out.println("   Example: WarCalc 9888 9976");
+        }
     }
 
     void printDefenderStatistics() {
@@ -115,18 +118,8 @@ public class WarCalc {
         System.out.println(data);
     }
 
-    private void printStatistics() {
+    void printStatistics() {
         printDefenderStatistics();
         printAttackerStatistics();
-    }
-
-    public static void main(String[] args) {
-        if (args.length == 2) {
-            WarCalc testBattle = new WarCalc(args[0], args[1]);
-            testBattle.printStatistics();
-        } else {
-            System.out.println("Usage: WarCalc <Defender Army> <Attacker Army>");
-            System.out.println("   Example: WarCalc 9888 9976");
-        }
     }
 }
